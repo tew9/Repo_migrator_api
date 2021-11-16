@@ -1,0 +1,28 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=chkbldscusdevopsst;AccountKey=vN+yJZPXOmjgBSZ5pPpAocPfI4BAoj3cL4qceLV0fIUNC416txhxJGYkTXXNIFUv/L7zlOFNeD9hMe88V2UaDQ==;EndpointSuffix=core.windows.net",
+
+    "AzureStorageConnection": "DefaultEndpointsProtocol=https;AccountName=chkbldscusdevopsst;AccountKey=vN+yJZPXOmjgBSZ5pPpAocPfI4BAoj3cL4qceLV0fIUNC416txhxJGYkTXXNIFUv/L7zlOFNeD9hMe88V2UaDQ==;EndpointSuffix=core.windows.net",
+
+    "OktaTokenUrl": "https://chk.okta.com/oauth2/aus2sc2fpwemBovPv357/v1/token",
+    "OktaClientId": " 0oa6imkj7jXVUE5tj357",
+    "OktaClientSecret": "IxaN440ECmRU9wZexMFHoB3Dhcpd3C822fpkp32X",
+    "ApiGatewayKey": "7c049bac736247eba693200e47232aba",
+    "ApiGatewayUrl": "https://app-gateway-dev.chk.com",
+
+    "AzDvoApiEndpoint": "_apis/",
+    "AzDvoUrl": "https://dev.azure.com/chkenergy/",
+    "AzDvoApiVersion": "?api-version=4.1",
+    "AzDvoPersonalAccessToken": "rmd2obid5whfwpz5kntetliqtsg4fhpdqccz5lcti2jnys2xfxrq",
+    "AzDvoUser": "svcorchprd",
+    "AzDvoDevOpsExamples": "CHK-DevOpsExamples",
+    "AzureStorageAccountTableTemplateMetadataName": "TemplateMetadata",
+    "AzureStorageAccountBlobName": "workingdir",
+    "AzDvoApiVersionPreview": "?api-version=6.0-preview.1",   
+    "templateUrl": "https://chkenergy@dev.azure.com/chkenergy/CHK-DevOpsExamples/_git/YAMLEndToEndTemplate",
+    "committerEmail": "ITNotifications@chk.com"
+  }
+}

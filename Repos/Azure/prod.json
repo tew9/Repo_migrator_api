@@ -1,0 +1,109 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "MicroserviceName": {
+      "value": "chkrun-taskmaster-repos"
+    },
+
+    "ServicePlanName": {
+      "value": "chkrun-taskmaster-repos-asp"
+    },
+
+    "ApiGatewayName": {
+      "value": "chk-appgateway"
+    },
+
+    "ApiGatewayPublicIP": {
+      "value": "13.65.171.81/32"
+    },
+
+    "AzureStorageConnection": {
+      "value": "DefaultEndpointsProtocol=https;AccountName=chkrunscusdevopsst;AccountKey=IZ55zuk2XvLQqoLMYSZb4MvPSkqjUk49wdzeFXGzGgNnNByLYO7HYCBO3KfTdR6HeF7N6OIs/72tSA+CsY7QdA==;EndpointSuffix=core.windows.net"
+    },
+
+    "StorageAccountName": {
+      "value": "chkrunscusdevopsst"
+    },
+
+    "CreateQueueName": {
+      "value": "taskmaster-repos-create"
+    },
+
+    "CreateTableName": {
+      "value": "TaskmasterReposCreate"
+    },
+
+    "AzDvoApiEndpoint": {
+      "value": "_apis/"
+    },
+
+    "AzDvoUrl": {
+      "value": "https://dev.azure.com/chkenergy/"
+    },
+
+    "AzDvoApiVersion": {
+      "value": "?api-version=4.1"
+    },
+
+    "AzDvoPersonalAccessToken": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/48f8daf0-5d37-42fb-a09a-59c14c16e561/resourceGroups/chkrun-eus2-io/providers/Microsoft.KeyVault/vaults/chkrun-eus2-io"
+        },
+        "secretName": "azr-svc-vstspat-svcorch"
+      }
+    },
+
+    "AzDvoDevOpsExamples": {
+      "value": "CHK-DevOpsExamples"
+    },
+    "AzureStorageAccountTableTemplateMetadataName": {
+      "value": "TemplateMetadata"
+    },
+    "AzDvoUser": {
+      "value": "svcorchprd"
+    },
+    "AzDvoApiVersionPreview": {
+      "value": "?api-version=6.0-preview.1"
+    },
+    "committerEmail": {
+      "value": "ITNotifications@chk.com"
+    },
+    "templateUrl": {
+      "value": "https://chkenergy@dev.azure.com/chkenergy/CHK-DevOpsExamples/_git/YAMLEndToEndTemplate"
+    },
+    "workingdir": {
+      "value": "D:\\home\\data\\Tempdir"
+    },
+    "OpenApi__Info__Version": {
+      "value": "2.0.0"
+    },
+
+    "OpenApi__Info__Title": {
+      "value": "Open API for TaskMaster Build Services"
+    },
+    "OpenApi__Info__Description": {
+      "value": "A Build Service API that runs on Azure Functions either 1.x or 2.x using Open API specification."
+    },
+    "OpenApi__Info__TermsOfService": {
+      "value": "https://github.com/aliencube/AzureFunctions.Extensions"
+    },
+    "OpenApi__Info__Contact__Name": {
+      "value": "CHK Shared Development"
+    },
+    "OpenApi__Info__Contact__Email": {
+      "value": "no-reply@chk.org"
+    },
+    "OpenApi__Info__Contact__Url": {
+      "value": "https://github.com/aliencube/AzureFunctions.Extensions/issues"
+    },
+    "OpenApi__Info__License__Name": {
+      "value": "MIT"
+    },
+    "OpenApi__Info__License__Url": {
+      "value": "http://opensource.org/licenses/MIT"
+
+    }
+  }
+}

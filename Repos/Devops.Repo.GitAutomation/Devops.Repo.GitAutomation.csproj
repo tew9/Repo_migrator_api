@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Description>This nugget package is built based on LibGit2Sharp 0.26.0, that automate git operations for devops templates to be integrated with an already created git repo that has TFVC migrated into it.</Description>
+		<RepositoryUrl>https://dev.azure.com/chkenergy/CHK-Iterative/_git/DevOps_TaskMaster_Repos?path=%2FDevOps.Repo.GitAutomation</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReleaseNotes>This version 1.0.1 update the Interfaces to be widely through any project that needs to do clonning, cleaning of tfvc to git , commit and push back.</PackageReleaseNotes>
+		<Version>1.0.2</Version>
+		<Authors>Tango</Authors>
+		<Company>CHK-ENERGY</Company>
+		<NeutralLanguage>en-US</NeutralLanguage>
+	</PropertyGroup>
+  <ItemGroup>
+     <PackageReference Include="LibGit2Sharp" Version="0.26.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,115 @@
+# .NET Core Function App to Windows on Azure
+# Build a .NET Core function app and deploy it to Azure as a Windows function App.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: 'e16c72b8-9b93-4641-9f0c-10b0acae59bb'
+
+  # Function app name
+  functionAppName: 'chkbld-devops-taskmaster-repos-dev'
+
+  # Agent VM image name
+  vmImageName: 'windows-2019'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps.Repo.Api'
+
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: NuGetCommand@2
+      displayName: 'NuGet Restore'
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+        vstsFeed: 'd100d853-fd5a-457a-bd8a-acc8e4f956f2'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: 'build'
+        projects: |
+          $(workingDirectory)/*.csproj
+        arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Client'
+      inputs:
+        command: 'build'
+        projects: |
+          $(System.DefaultWorkingDirectory)/DevOps.Repo.Client/*.csproj
+        arguments: --configuration Release --verbosity d
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build GitAutomation'
+      inputs:
+        command: 'build'
+        projects: |
+          $(System.DefaultWorkingDirectory)/DevOps.Repo.GitAutomation/*.csproj
+        arguments: --configuration Release --verbosity d
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive Artifacts'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/publish_output'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      displayName: 'Publish Artifacts'
+      artifact: drop
+
+    - task: NuGetToolInstaller@1
+      inputs:
+        versionSpec: 
+        checkLatest: true
+
+    - task: NuGetCommand@2
+      displayName: 'Package Client for Nuget'
+      inputs:
+        command: 'pack'
+        packagesToPack: '$(System.DefaultWorkingDirectory)/DevOps.Repo.Client/*.csproj'
+        configuration: 'Release'
+        packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
+        versioningScheme: 'off'
+
+    - task: NuGetCommand@2
+      displayName: 'Package GitAutomation for Nuget'
+      inputs:
+        command: 'pack'
+        packagesToPack: '$(System.DefaultWorkingDirectory)/DevOps.Repo.GitAutomation/*.csproj'
+        configuration: 'Release'
+        packDestination: '$(Build.ArtifactStagingDirectory)/nuget'
+        versioningScheme: 'off'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish ARM Template'
+      inputs:
+        PathtoPublish: '$(Build.Repository.LocalPath)\Azure'
+        ArtifactName: 'Azure'
+        publishLocation: 'Container'
+
+    - task: NuGetCommand@2
+      displayName: 'Push to MS Artifacts'
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg;!$(Build.ArtifactStagingDirectory)/nuget/*.symbols.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: 'd100d853-fd5a-457a-bd8a-acc8e4f956f2'
+        allowPackageConflicts: true

@@ -1,0 +1,1101 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Open API for TaskMaster Repo Services",
+    "description": "It's a Service API that runs on Azure Functions either 1.x or 2.x and above using Open API specification.",
+    "termsOfService": "https://github.com/aliencube/AzureFunctions.Extensions",
+    "contact": {
+      "name": "CHK Shared Development",
+      "url": "https://github.com/aliencube/AzureFunctions.Extensions/issues",
+      "email": "no-reply@chk.org"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    },
+    "version": "2.0.0"
+  },
+  "host": "localhost:7071",
+  "basePath": "/taskmaster/repos/v1",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/repos": {
+      "post": {
+        "tags": [
+          "createEmptyRepo"
+        ],
+        "summary": "CreateEmptyRepo",
+        "description": "Create an empty git repo in ADO either for migration later for other use",
+        "operationId": "emptyrepo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/createEmptyRepoRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/applicationDto"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/repos/templates": {
+      "post": {
+        "tags": [
+          "CreateFromTemplate"
+        ],
+        "summary": "MigrateFromTemplate",
+        "description": "Create a git repo in ADO and Migrate template standards from a template  name provided, or cleanup and transform tfvc to git",
+        "operationId": "fromtemplate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/createRepoFromTemplateRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/outPut"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/repos/{projectName}/{repoName}": {
+      "delete": {
+        "tags": [
+          "DeleteRepo"
+        ],
+        "summary": "DeleteOneRepo",
+        "description": "This Api will delete git repo if it exists",
+        "operationId": "deleteRepo",
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectName",
+            "description": "example: CHK",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "The project name",
+            "x-ms-visibility": "important"
+          },
+          {
+            "in": "path",
+            "name": "repoName",
+            "description": " example: tangodemo2",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "The repo name",
+            "x-ms-visibility": "important"
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/repoDeleteDto"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      },
+      "get": {
+        "tags": [
+          "GetRepo"
+        ],
+        "summary": "GetOneRepo",
+        "description": "This Api will get repo informations if it exists in ADO given project.",
+        "operationId": "getRepo",
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectName",
+            "description": "example: CHK",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "The project name",
+            "x-ms-visibility": "important"
+          },
+          {
+            "in": "path",
+            "name": "repoName",
+            "description": "example: tangodemo2",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "The repo name",
+            "x-ms-visibility": "important"
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/repository"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/templates": {
+      "get": {
+        "tags": [
+          "GetAllTemplates"
+        ],
+        "summary": "GetAllTemplates",
+        "description": "This Api will get all the template from azure storage table.",
+        "operationId": "getAllTemplates",
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/applicationTemplate"
+              }
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/tfvc/{projectName}": {
+      "get": {
+        "tags": [
+          "GetAllTfsRepos"
+        ],
+        "summary": "GetAllTfsRepos",
+        "description": "This Api will get all the tfvc folders under given project, if any exist.",
+        "operationId": "getAllTfvc",
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectName",
+            "description": "example: CHK",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "get all tfvc repos",
+            "x-ms-visibility": "important"
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/tfvcFolderList"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/repos/{projectName}": {
+      "get": {
+        "tags": [
+          "GetAllGitRepos"
+        ],
+        "summary": "GetAllGitRepos",
+        "description": "This Api will get all git repos contained in the given project in ADO.",
+        "operationId": "getRepos",
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectName",
+            "description": "example: CHK",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "The project name",
+            "x-ms-visibility": "important"
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/repoList"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/templates/{templateName}": {
+      "get": {
+        "tags": [
+          "GetTemplate"
+        ],
+        "summary": "GetOneTemplate",
+        "description": "This Api will get one template from azure storage account table",
+        "operationId": "getTemplate",
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "templateName",
+            "description": "example: yamlbuild",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "template name you want retrieve from the table",
+            "x-ms-visibility": "important"
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/applicationTemplate"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/repos/git": {
+      "put": {
+        "tags": [
+          "Git2Git"
+        ],
+        "summary": "Git2GitMigration",
+        "description": "This Api will migrate git repos in one project into another git repos in another project in devops",
+        "operationId": "migrateGit2Git",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/git2GitMigrateRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/outPut"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/repos/tfvc": {
+      "put": {
+        "tags": [
+          "Tfvc2Git"
+        ],
+        "summary": "TFS2GitMigration",
+        "description": "This Api will migrate tfvc repos into git repos, NB: Only upto 180 days of History will be migrated, either within the same project or different devops projects",
+        "operationId": "migrateTfvc2Git",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/tfvc2GitMigrateRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/outPut"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    }
+  },
+  "definitions": {
+    "applicationDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "committer": {
+          "type": "string"
+        },
+        "cleanUp": {
+          "type": "boolean"
+        },
+        "integration": {
+          "type": "boolean"
+        },
+        "destinationRepoName": {
+          "type": "string"
+        },
+        "gitSourceRepoName": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        },
+        "templateName": {
+          "type": "string"
+        },
+        "destinationProjectName": {
+          "type": "string"
+        },
+        "sourceProjectName": {
+          "type": "string"
+        },
+        "Project": {
+          "$ref": "#/definitions/projectDto"
+        },
+        "sourceProject": {
+          "$ref": "#/definitions/projectDto"
+        },
+        "Repo": {
+          "$ref": "#/definitions/repoDto"
+        },
+        "sourceRepo": {
+          "$ref": "#/definitions/repoDto"
+        },
+        "ServiceEndpoint": {
+          "$ref": "#/definitions/serviceEndpointDto"
+        },
+        "ImportRequest": {
+          "$ref": "#/definitions/importRequestDto"
+        },
+        "TfvcImportRequest": {
+          "$ref": "#/definitions/gitImportTFVCSourceDto"
+        },
+        "RepoPushes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repoPushDto"
+          }
+        },
+        "repoType": {
+          "type": "string"
+        },
+        "Template": {
+          "$ref": "#/definitions/applicationTemplateDto"
+        },
+        "tfvcSource": {
+          "$ref": "#/definitions/tfvcSourceDto"
+        },
+        "deleteServiceEndpointAfterImportIsDone": {
+          "type": "boolean"
+        }
+      }
+    },
+    "applicationTemplate": {
+      "type": "object",
+      "properties": {
+        "buildAgentName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "gitUrl": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "releaseDefinitionId": {
+          "type": "string"
+        },
+        "buildName": {
+          "type": "string"
+        },
+        "releaseName": {
+          "type": "string"
+        },
+        "repoName": {
+          "type": "string"
+        },
+        "repoId": {
+          "type": "string"
+        },
+        "error": {
+          "$ref": "#/definitions/errorDto"
+        },
+        "partitionKey": {
+          "type": "string"
+        },
+        "rowKey": {
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "applicationTemplateDto": {
+      "type": "object",
+      "properties": {
+        "RowKey": {
+          "type": "string"
+        },
+        "BuildAgentName": {
+          "type": "string"
+        },
+        "GitUrl": {
+          "type": "string"
+        },
+        "Platform": {
+          "type": "string"
+        },
+        "ReleaseDefinitionId": {
+          "type": "string"
+        },
+        "BuildName": {
+          "type": "string"
+        },
+        "ReleaseName": {
+          "type": "string"
+        },
+        "RepoName": {
+          "type": "string"
+        },
+        "RepoId": {
+          "type": "string"
+        },
+        "error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "commitLink": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "contentMetaDataDto": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        }
+      }
+    },
+    "createEmptyRepoRequestDto": {
+      "type": "object",
+      "properties": {
+        "destinationRepoName": {
+          "type": "string"
+        },
+        "destinationProjectName": {
+          "type": "string"
+        }
+      }
+    },
+    "createRepoFromTemplateRequestDto": {
+      "type": "object",
+      "properties": {
+        "destinationRepoName": {
+          "type": "string"
+        },
+        "templateName": {
+          "type": "string"
+        },
+        "destinationProjectName": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "boolean"
+        },
+        "cleanUp": {
+          "type": "boolean"
+        },
+        "committerEmail": {
+          "type": "string"
+        }
+      }
+    },
+    "errorDto": {
+      "type": "object",
+      "properties": {
+        "Message": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        }
+      }
+    },
+    "git2GitMigrateRequestDto": {
+      "type": "object",
+      "properties": {
+        "destinationProjectName": {
+          "type": "string"
+        },
+        "destinationRepoName": {
+          "type": "string"
+        },
+        "gitSourceRepoName": {
+          "type": "string"
+        },
+        "sourceProjectName": {
+          "type": "string"
+        },
+        "repoType": {
+          "type": "string"
+        },
+        "deleteServiceEndpointAfterImportIsDone": {
+          "type": "boolean"
+        }
+      }
+    },
+    "gitImportTFVCSourceDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        },
+        "Parameters": {
+          "$ref": "#/definitions/tfvcParametersDto"
+        },
+        "RepoId": {
+          "type": "string"
+        }
+      }
+    },
+    "gitSourceDto": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "importRequestDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        },
+        "Parameters": {
+          "$ref": "#/definitions/parametersDto"
+        }
+      }
+    },
+    "itemLink": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "linksDto": {
+      "type": "object",
+      "properties": {
+        "pullRequests": {
+          "$ref": "#/definitions/pullRequestLink"
+        },
+        "commits": {
+          "$ref": "#/definitions/commitLink"
+        },
+        "items": {
+          "$ref": "#/definitions/itemLink"
+        },
+        "pushes": {
+          "$ref": "#/definitions/pushLink"
+        }
+      }
+    },
+    "outPut": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "$ref": "#/definitions/repoOut"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "template": {
+          "$ref": "#/definitions/templateOut"
+        },
+        "error": {
+          "$ref": "#/definitions/errorDto"
+        },
+        "integration": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parametersDto": {
+      "type": "object",
+      "properties": {
+        "gitSource": {
+          "$ref": "#/definitions/gitSourceDto"
+        },
+        "serviceEndpointId": {
+          "type": "string"
+        },
+        "deleteServiceEndpointAfterImportIsDone": {
+          "type": "boolean"
+        }
+      }
+    },
+    "projectDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "State": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "LastUpdateTime": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Url": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "pullRequestLink": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "pushLink": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "repoDeleteDto": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Deleted": {
+          "type": "boolean"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "repoDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "size": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "_links": {
+          "$ref": "#/definitions/linksDto"
+        },
+        "Project": {
+          "$ref": "#/definitions/projectDto"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "repoList": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "string"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repository"
+          }
+        },
+        "error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "repoOut": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "string"
+        }
+      }
+    },
+    "repoPushDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "url": {
+          "type": "string"
+        },
+        "defaultBranch": {
+          "type": "string"
+        },
+        "remoteUrl": {
+          "type": "string"
+        },
+        "project": {
+          "$ref": "#/definitions/projectDto"
+        },
+        "type": {
+          "type": "string"
+        },
+        "_links": {
+          "$ref": "#/definitions/linksDto"
+        },
+        "error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "self": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "serviceEndpointDto": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Url": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "templateOut": {
+      "type": "object",
+      "properties": {
+        "buildAgentName": {
+          "type": "string"
+        },
+        "templateBuildName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "templateReleaseName": {
+          "type": "string"
+        }
+      }
+    },
+    "tfvc2GitMigrateRequestDto": {
+      "type": "object",
+      "properties": {
+        "destinationProjectName": {
+          "type": "string"
+        },
+        "destinationRepoName": {
+          "type": "string"
+        },
+        "sourceProjectName": {
+          "type": "string"
+        },
+        "repoType": {
+          "type": "string"
+        },
+        "deleteServiceEndpointAfterImportIsDone": {
+          "type": "boolean"
+        },
+        "tfvcSource": {
+          "$ref": "#/definitions/tfvcSourceDto"
+        }
+      }
+    },
+    "tfvcFolder": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "changeDate": {
+          "type": "string"
+        },
+        "contentMetaData": {
+          "$ref": "#/definitions/contentMetaDataDto"
+        },
+        "_links": {
+          "$ref": "#/definitions/tfvcLinksDto"
+        },
+        "path": {
+          "type": "string"
+        },
+        "isFolder": {
+          "type": "boolean"
+        },
+        "error": {
+          "$ref": "#/definitions/errorDto"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "tfvcFolderList": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "string"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tfvcFolder"
+          }
+        },
+        "error": {
+          "$ref": "#/definitions/errorDto"
+        }
+      }
+    },
+    "tfvcLinksDto": {
+      "type": "object",
+      "properties": {
+        "self": {
+          "$ref": "#/definitions/self"
+        }
+      }
+    },
+    "tfvcParametersDto": {
+      "type": "object",
+      "properties": {
+        "tfvcSource": {
+          "$ref": "#/definitions/tfvcSourceDto"
+        },
+        "deleteServiceEndpointAfterImportIsDone": {
+          "type": "boolean"
+        }
+      }
+    },
+    "tfvcSourceDto": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "importHistory": {
+          "type": "boolean"
+        },
+        "importHistoryDurationInDays": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "authKey": {
+      "type": "apiKey",
+      "name": "x-functions-key",
+      "in": "header"
+    }
+  }
+}
