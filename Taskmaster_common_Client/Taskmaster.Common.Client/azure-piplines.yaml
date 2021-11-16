@@ -1,0 +1,51 @@
+trigger:
+- master
+variables:
+  # Agent VM image name
+  vmImageName: 'windows-2019'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/TaskMaster.Common.Client'
+
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet Restore'
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+        vstsFeed: 'd100d853-fd5a-457a-bd8a-acc8e4f956f2'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Client'
+      inputs:
+        command: 'build'
+        projects: |
+          $(System.DefaultWorkingDirectory)/TaskMaster.Common.Client/*.csproj
+        arguments: --configuration Release --verbosity d
+
+    - task: DotNetCoreCLI@2
+      inputs: 
+        command: 'pack'
+        outputDir: '$(Build.ArtifactStagingDirectory)/nuget'
+
+    - task: NuGetCommand@2
+      displayName: 'Push to MS Artifacts'
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg;!$(Build.ArtifactStagingDirectory)/nuget/*.symbols.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: 'd100d853-fd5a-457a-bd8a-acc8e4f956f2'
+        allowPackageConflicts: true
+

@@ -1,0 +1,37 @@
+{
+  "IsEncrypted": false,
+
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+
+    "OktaTokenUrl": "laofshpe5qntgniv7tvmgarlgo2562l3ts77u3ycflltvtpz4cfq",
+    "OktaClientId": "0oa6imkj7jXVUE5tj357",
+    "OktaClientSecret": "IxaN440ECmRU9wZexMFHoB3Dhcpd3C822fpkp32X",
+    "ApiGatewayKey": "7c049bac736247eba693200e47232aba",
+    "ApiGatewayUrl": "https://app.gateway-dev.chk.com",
+
+
+    "AzDvoApiEndpoint": "_apis/",
+    "AzDvoUrl": "https://dev.azure.com/chkenergy/",
+    "AzDvoApiVersion": "?api-version=4.1",
+    "AzDvoPersonalAccessToken": "laofshpe5qntgniv7tvmgarlgo2562l3ts77u3ycflltvtpz4cfq",
+    "AzDvoDevOpsExamples": "CHK-DevOpsExamples",
+    "AzDvoApiYmlFileName": "azure-pipelines.yml",
+    "AzDvoApiYmlBuildType": 2,
+    "AzDvoApiYmlRepoType": "TfsGit",
+    "BuilDefRevision": 3,
+
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=chkbldscusdevopsst;AccountKey=vN+yJZPXOmjgBSZ5pPpAocPfI4BAoj3cL4qceLV0fIUNC416txhxJGYkTXXNIFUv/L7zlOFNeD9hMe88V2UaDQ==;EndpointSuffix=core.windows.net",
+    "AzureStorageConnection": "DefaultEndpointsProtocol=https;AccountName=chkbldscusdevopsst;AccountKey=vN+yJZPXOmjgBSZ5pPpAocPfI4BAoj3cL4qceLV0fIUNC416txhxJGYkTXXNIFUv/L7zlOFNeD9hMe88V2UaDQ==;EndpointSuffix=core.windows.net",
+
+    "OpenApi__Info__Version": "2.0.0",
+    "OpenApi__Info__Title": "Open API Specs for Build Service built on Azure Functions",
+    "OpenApi__Info__Description": "A Build Service API that runs on Azure Functions either 1.x or 2.x using Open API specification.",
+    "OpenApi__Info__TermsOfService": "https://github.com/aliencube/AzureFunctions.Extensions",
+    "OpenApi__Info__Contact__Name": "CHK Shared Development",
+    "OpenApi__Info__Contact__Email": "no-reply@chk.org",
+    "OpenApi__Info__Contact__Url": "https://github.com/aliencube/AzureFunctions.Extensions/issues",
+    "OpenApi__Info__License__Name": "MIT",
+    "OpenApi__Info__License__Url": "http://opensource.org/licenses/MIT"
+  }
+}

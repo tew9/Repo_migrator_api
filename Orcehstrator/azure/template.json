@@ -1,0 +1,333 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "AzureFunctionsWorkerRuntime": {
+      "defaultValue": "dotnet",
+      "type": "string"
+    },
+    "AzureFunctionsExtensionVersion": {
+      "defaultValue": "~3",
+      "type": "string"
+    },
+    "OktaTokenUrl": {
+      "defaultValue": "https://chk.okta.com/oauth2/aus8z90u587jei22G357/v1/token",
+      "type": "string"
+    },
+    "MicroserviceName": {
+      "type": "string"
+    },
+    "ServicePlanName": {
+      "type": "string"
+    },
+    "ApiGatewayName": {
+      "type": "string"
+    },
+    "ApiGatewayPublicIP": {
+      "type": "string"
+    },
+    "ApiGatewayUrl": {
+      "type": "string"
+    },
+    "StorageAccountName": {
+      "type": "string"
+    },
+    "AzureStorageConnection": {
+      "type": "string"
+    },
+    "CreateQueueName": {
+      "type": "string"
+    },
+    "CreateTableName": {
+      "type": "string"
+    },
+    "OktaClientId": {
+      "type": "string"
+    },
+    "OktaClientSecret": {
+      "type": "string"
+    },
+    "AzDvoApiVersionPreview": {
+      "type": "string"
+    },
+    "AzureStorageAccountTableTemplateMetadataName": {
+      "type": "string"
+    },
+    "AzDvoDevOpsExamples": {
+      "type": "string"
+    },
+    "AzDvoUrl": {
+      "type": "string"
+    },
+    "AzDvoApiVersion": {
+      "type": "string"
+    },
+    "AzDvoUser": {
+      "type": "string"
+    },
+    "AzDvoPersonalAccessToken": {
+      "type": "string"
+    },
+    "AzDvoApiEndpoint": {
+      "type": "string"
+    },
+    "committerEmail": {
+      "type": "string"
+    },
+    "templateUrl": {
+      "type": "string"
+    },
+    "workingdir": {
+      "type": "string"
+    },
+
+    "OpenApi__Info__Version": {
+      "type": "string"
+    },
+    "OpenApi__Info__Title": {
+      "type": "string"
+    },
+    "OpenApi__Info__Description": {
+      "type": "string"
+    },
+    "OpenApi__Info__TermsOfService": {
+      "type": "string"
+    },
+    "OpenApi__Info__Contact__Name": {
+      "type": "string"
+    },
+    "OpenApi__Info__Contact__Email": {
+      "type": "string"
+    },
+    "OpenApi__Info__Contact__Url": {
+      "type": "string"
+    },
+    "OpenApi__Info__License__Name": {
+      "type": "string"
+    },
+    "OpenApi__Info__License__Url": {
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Web/sites/config",
+      "name": "[concat(parameters('MicroserviceName'), '/appsettings')]",
+      "apiVersion": "2018-11-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('MicroserviceName'))]"
+      ],
+      "properties": {
+        "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat('microsoft.insights/components/', parameters('MicroserviceName'))).InstrumentationKey]",
+        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(concat('microsoft.insights/components/', parameters('MicroserviceName'))).ConnectionString]",
+        "APPINSIGHTS_PROFILERFEATURE_VERSION": "1.0.0",
+        "APPINSIGHTS_SNAPSHOTFEATURE_VERSION": "1.0.0",
+        "ApplicationInsightsAgent_EXTENSION_VERSION": "~2",
+        "DiagnosticServices_EXTENSION_VERSION": "~3",
+        "InstrumentationEngine_EXTENSION_VERSION": "disabled",
+        "SnapshotDebugger_EXTENSION_VERSION": "disabled",
+        "WEBSITE_RUN_FROM_PACKAGE": "1",
+        "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[parameters('AzureStorageConnection')]",
+        "WEBSITE_CONTENTSHARE": "[parameters('MicroserviceName')]",
+        "FUNCTIONS_WORKER_RUNTIME": "[parameters('AzureFunctionsWorkerRuntime')]",
+        "FUNCTIONS_EXTENSION_VERSION": "[parameters('AzureFunctionsExtensionVersion')]",
+        "AzureWebJobsStorage": "[parameters('AzureStorageConnection')]",
+        "AzureStorageConnection": "[parameters('AzureStorageConnection')]",
+        "CreateQueueName": "[parameters('CreateQueueName')]",
+        "CreateTableName": "[parameters('CreateTableName')]",
+        "OktaTokenUrl": "[parameters('OktaTokenUrl')]",
+        "OktaClientId": "[parameters('OktaClientId')]",
+        "OktaClientSecret": "[parameters('OktaClientSecret')]",
+        "AzDvoApiEndpoint": "[parameters('AzDvoApiEndpoint')]",
+        "AzDvoUrl": "[parameters('AzDvoUrl')]",
+        "AzDvoApiVersion": "[parameters('AzDvoApiVersion')]",
+        "AzDvoUser": "[parameters('AzDvoUser')]",
+        "AzDvoPersonalAccessToken": "[parameters('AzDvoPersonalAccessToken')]",
+        "AzureStorageAccountTableTemplateMetadataName": "[parameters('AzureStorageAccountTableTemplateMetadataName')]",
+        "AzDvoApiVersionPreview": "[parameters('AzDvoApiVersionPreview')]",
+        "committerEmail": "[parameters('committerEmail')]",
+        "templateUrl": "[parameters('templateUrl')]",
+        "workingdir": "[parameters('workingdir')]",
+        "ApiGatewayUrl": "[parameters('ApiGatewayUrl')]",
+        "OpenApi__Info__Version": "[parameters('OpenApi__Info__Version')]",
+        "OpenApi__Info__Title": "[parameters('OpenApi__Info__Title')]",
+        "OpenApi__Info__Description": "[parameters('OpenApi__Info__Description')]",
+        "OpenApi__Info__TermsOfService": "[parameters('OpenApi__Info__TermsOfService')]",
+        "OpenApi__Info__Contact__Name": "[parameters('OpenApi__Info__Contact__Name')]",
+        "OpenApi__Info__Contact__Email": "[parameters('OpenApi__Info__Contact__Email')]",
+        "OpenApi__Info__Contact__Url": "[parameters('OpenApi__Info__Contact__Url')]",
+        "OpenApi__Info__License__Name": "[parameters('OpenApi__Info__License__Name')]",
+        "OpenApi__Info__License__Url": "[parameters('OpenApi__Info__License__Url')]"
+      }
+    },
+    {
+      "type": "microsoft.insights/components",
+      "apiVersion": "2015-05-01",
+      "name": "[parameters('MicroserviceName')]",
+      "location": "southcentralus",
+      "kind": "web",
+      "properties": {
+        "Application_Type": "web",
+        "Request_Source": "IbizaWebAppExtensionCreate"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('ServicePlanName')]",
+      "location": "southcentralus",
+      "sku": {
+        "name": "Y1",
+        "tier": "Dynamic"
+      },
+      "properties": {
+        "name": "[parameters('ServicePlanName')]",
+        "computeMode": "Dynamic"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2018-11-01",
+      "name": "[parameters('MicroserviceName')]",
+      "location": "South Central US",
+      "kind": "functionapp",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components/', parameters('MicroserviceName'))]"
+      ],
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('MicroserviceName'), '.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Standard"
+          },
+          {
+            "name": "[concat(parameters('MicroserviceName'), '.scm.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('ServicePlanName'))]",
+        "reserved": false,
+        "isXenon": false,
+        "hyperV": false,
+        "scmSiteAlsoStopped": false,
+        "clientAffinityEnabled": false,
+        "clientCertEnabled": false,
+        "hostNamesDisabled": false,
+        "containerSize": 1536,
+        "dailyMemoryTimeQuota": 0,
+        "httpsOnly": false,
+        "redundancyMode": "None"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2018-11-01",
+      "name": "[concat(parameters('MicroserviceName'), '/web')]",
+      "location": "South Central US",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('MicroserviceName'))]"
+      ],
+      "properties": {
+        "numberOfWorkers": 1,
+        "defaultDocuments": [
+          "Default.htm",
+          "Default.html",
+          "Default.asp",
+          "index.htm",
+          "index.html",
+          "iisstart.htm",
+          "default.aspx",
+          "index.php"
+        ],
+        "netFrameworkVersion": "v4.0",
+        "phpVersion": "5.6",
+        "requestTracingEnabled": false,
+        "remoteDebuggingEnabled": false,
+        "httpLoggingEnabled": false,
+        "logsDirectorySizeLimit": 35,
+        "detailedErrorLoggingEnabled": false,
+        "scmType": "None",
+        "use32BitWorkerProcess": true,
+        "webSocketsEnabled": false,
+        "alwaysOn": false,
+        "managedPipelineMode": "Integrated",
+        "virtualApplications": [
+          {
+            "virtualPath": "/",
+            "physicalPath": "site\\wwwroot",
+            "preloadEnabled": false
+          }
+        ],
+        "loadBalancing": "LeastRequests",
+        "experiments": {
+          "rampUpRules": []
+        },
+        "autoHealEnabled": false,
+        "cors": {
+          "allowedOrigins": [
+            "https://functions.azure.com",
+            "https://functions-staging.azure.com",
+            "https://functions-next.azure.com"
+          ],
+          "supportCredentials": false
+        },
+        "localMySqlEnabled": false,
+        "ipSecurityRestrictions": [
+          {
+            "ipAddress": "[parameters('ApiGatewayPublicIP')]",
+            "action": "Allow",
+            "tag": "Default",
+            "priority": 1,
+            "name": "[parameters('ApiGatewayName')]",
+            "description": "API Service public IP"
+          },
+          {
+            "ipAddress": "204.16.64.3/32",
+            "action": "Allow",
+            "priority": 2,
+            "name": "CHK Network",
+            "description": "CHK Network public IP"
+          },
+          {
+            "ipAddress": "Any",
+            "action": "Deny",
+            "priority": 2147483647,
+            "name": "Deny all",
+            "description": "Deny all access"
+          }
+        ],
+        "scmIpSecurityRestrictions": [
+          {
+            "ipAddress": "Any",
+            "action": "Allow",
+            "priority": 1,
+            "name": "Allow all",
+            "description": "Allow all access"
+          }
+        ],
+        "scmIpSecurityRestrictionsUseMain": false,
+        "http20Enabled": false,
+        "minTlsVersion": "1.2",
+        "ftpsState": "AllAllowed",
+        "reservedInstanceCount": 0
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/hostNameBindings",
+      "apiVersion": "2018-11-01",
+      "name": "[concat(parameters('MicroserviceName'), '/', parameters('MicroserviceName'), '.azurewebsites.net')]",
+      "location": "South Central US",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('MicroserviceName'))]"
+      ],
+      "properties": {
+        "siteName": "[parameters('MicroserviceName')]",
+        "hostNameType": "Verified"
+      }
+    }
+  ]
+}

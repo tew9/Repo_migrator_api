@@ -1,0 +1,23 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+
+    "OktaTokenUrl": "https://chk.okta.com/oauth2/aus8z90u587jei22G357/v1/token",
+    "OktaClientId": "0oa8z8vrmuI3h62Oc357",
+    "OktaClientSecret": "LVmNF1x0H3awGfs3_FSISil6xTXb604fBoXjwdDx",
+    "ApiGatewayKey": "7c049bac736247eba693200e47232aba",
+    "ApiGatewayUrl": "https://app-gateway-dev.chk.com",
+
+    "OpenApi__Info__Version": "2.0.0",
+    "OpenApi__Info__Title": "Open API Specs for orchestrator Service built on Azure Functions",
+    "OpenApi__Info__Description": "A orchestrator Service API that runs on Azure Functions either 1.x or 2.x using Open API specification.",
+    "OpenApi__Info__TermsOfService": "https://github.com/aliencube/AzureFunctions.Extensions",
+    "OpenApi__Info__Contact__Name": "CHK Shared Development",
+    "OpenApi__Info__Contact__Email": "no-reply@chk.org",
+    "OpenApi__Info__Contact__Url": "https://github.com/aliencube/AzureFunctions.Extensions/issues",
+    "OpenApi__Info__License__Name": "MIT",
+    "OpenApi__Info__License__Url": "http://opensource.org/licenses/MIT"
+  }
+}

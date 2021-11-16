@@ -1,0 +1,104 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "MicroserviceName": {
+      "value": "chkbld-taskmaster-orchestrator-test"
+    },
+    "ServicePlanName": {
+      "value": "chkbld-taskmaster-orchestrator-test-asp"
+    },
+    "ApiGatewayName": {
+      "value": "chk-appgateway-test"
+    },
+    "ApiGatewayPublicIP": {
+      "value": "13.66.52.246/32"
+    },
+    "AzureStorageConnection": {
+      "value": "DefaultEndpointsProtocol=https;AccountName=chkbldscusdevopsst;AccountKey=vN+yJZPXOmjgBSZ5pPpAocPfI4BAoj3cL4qceLV0fIUNC416txhxJGYkTXXNIFUv/L7zlOFNeD9hMe88V2UaDQ==;EndpointSuffix=core.windows.net"
+    },
+    "StorageAccountName": {
+      "value": "chkbldscusdevopsst"
+    },
+    "CreateQueueName": {
+      "value": "taskmaster-orchestrator-create-test"
+    },
+    "CreateTableName": {
+      "value": "TaskmasterOrchestratorCreateTest"
+    },
+    "OktaClientId": {
+      "value": "0oa8z90gg2wItrpp8357"
+    },
+    "OktaClientSecret": {
+      "value": "SjfU-CDSdeIh7w-gPudbqh8NCJNo0hd293-3feUL"
+    },
+    "ApiGatewayUrl": {
+      "value": "https://app-gateway-test.chk.com"
+    },
+    "AzDvoApiEndpoint": {
+      "value": "_apis/"
+    },
+    "AzDvoUrl": {
+      "value": "https://dev.azure.com/chkenergy/"
+    },
+    "AzDvoApiVersion": {
+      "value": "?api-version=4.1"
+    },
+    "AzDvoPersonalAccessToken": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/4beed2a9-bb9f-453e-a4a0-b1a82b65c2a5/resourceGroups/chkbld-eus2-io-dev/providers/Microsoft.KeyVault/vaults/chkbld-eus2-io-dev"
+        },
+        "secretName": "azr-svc-vstspat-svcorch"
+      }
+    },
+    "AzDvoDevOpsExamples": {
+      "value": "CHK-DevOpsExamples"
+    },
+    "AzureStorageAccountTableTemplateMetadataName": {
+      "value": "TemplateMetadata"
+    },
+    "AzDvoUser": {
+      "value": "svcorchprd"
+    },
+    "AzDvoApiVersionPreview": {
+      "value": "?api-version=6.0-preview.1"
+    },
+    "committerEmail": {
+      "value": "ITNotifications@chk.com"
+    },
+    "templateUrl": {
+      "value": "https://chkenergy@dev.azure.com/chkenergy/CHK-DevOpsExamples/_git/YAMLEndToEndTemplate"
+    },
+    "workingdir": {
+      "value": "D:\\home\\data\\Tempdir"
+    },
+    "OpenApi__Info__Version": {
+      "value": "2.0.0"
+    },
+    "OpenApi__Info__Title": {
+      "value": "Open API for TaskMaster orchestrator Services"
+    },
+    "OpenApi__Info__Description": {
+      "value": "It's a Service API that runs on Azure Functions either 1.x or 2.x and above using Open API specification."
+    },
+    "OpenApi__Info__TermsOfService": {
+      "value": "https://github.com/aliencube/AzureFunctions.Extensions"
+    },
+    "OpenApi__Info__Contact__Name": {
+      "value": "CHK Shared Development"
+    },
+    "OpenApi__Info__Contact__Email": {
+      "value": "no-reply@chk.org"
+    },
+    "OpenApi__Info__Contact__Url": {
+      "value": "https://github.com/aliencube/AzureFunctions.Extensions/issues"
+    },
+    "OpenApi__Info__License__Name": {
+      "value": "MIT"
+    },
+    "OpenApi__Info__License__Url": {
+      "value": "http://opensource.org/licenses/MIT"
+    }
+  }
+}

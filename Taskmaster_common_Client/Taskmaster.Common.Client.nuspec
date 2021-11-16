@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>TaskMaster.Common.Client</id>
+    <version>$version$</version>
+    <title>TaskMaster Common Client Library</title>
+    <authors>Chesapeake</authors>
+    <owners>Chesapeake</owners>
+    <projectUrl>http://www.mychk.com</projectUrl>
+    <iconUrl>http://www.mychk.com/ResourceLibrary/Icons/rig_blue.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Common library for TaskMaster client services, this includes Client Config Classes</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>TaskMaster Client Config</tags>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <!--<dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />-->
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\TaskMaster.Common.Client\bin\Release\netcoreapp3.1\*.*" target="lib\netcoreapp3.1" />
+    <file src=".\**\*.cs" target="src" />
+  </files>
+</package>
